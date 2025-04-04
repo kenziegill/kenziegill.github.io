@@ -3,36 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenzie's Portfolio</title>
-    <link rel="stylesheet" href="stylepage.css">
-    <link rel="icon" href="pinkheart.png">
+    <title>Redirecting to My New Portfolio</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: #2b2b2b;
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+            color: #3f72af;
+        }
+
+        p {
+            margin-bottom: 2rem;
+        }
+
+        .redirect-button {
+            background-color: #3f72af;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .redirect-button:hover {
+            background-color: #112d4e;
+            transform: scale(1.05);
+        }
+
+        .countdown {
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            color: #3f72af;
+        }
+
+        .bubble {
+            position: absolute;
+            background-color: rgba(63, 114, 175, 0.2);
+            border-radius: 50%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(15px);
+            }
+        }
+
+        .loader {
+            width: 120px;
+            height: 6px;
+            background: #f0f0f0;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+
+        .loader:before {
+            content: "";
+            position: absolute;
+            left: -50%;
+            height: 6px;
+            width: 40%;
+            background-color: #3f72af;
+            animation: loading 2s linear infinite;
+            border-radius: 3px;
+        }
+
+        @keyframes loading {
+            from {
+                left: -50%;
+            }
+            to {
+                left: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div id="top-bar"></div>
-    <div id="main-content">
-        <div id="logoimg"><img src="logo.png"></div>
-        <div class="roles">DESIGNER | DEVELOPER | RESEARCHER | INNOVATOR</div>
-        <div class="button-container">
-            <a href="gallery.html" class="button">
-              Browse Gallery
-              <span class="arrow">➜</span>
-            </a>
-          </div>
+    <div class="container">
+        <h1>My Portfolio Has Moved!</h1>
+        <p>Thanks for visiting! I've created a new and improved portfolio showcasing my latest work.</p>
+        <div class="loader"></div>
+        <p>You will be automatically redirected in <span id="countdown">5</span> seconds.</p>
+        <a href="https://kenziegill.framer.website/" id="redirect-link" class="redirect-button">Take Me There Now</a>
     </div>
-    
-    <nav>
-        <div class="nav-link-container">
-          <a href="gallery.html" class="nav-link">Gallery</a>
-        </div>
-        <div class="nav-link-container">
-          <a href="about.html" class="nav-link">About</a>
-        </div>
-        <div class="nav-link-container">
-          <a href="#" class="nav-link">Resume</a>
-        </div>
-        <div class="nav-link-container">
-          <a href="https://www.linkedin.com/in/kenziebgill/" target="_blank" class="nav-link">LinkedIn</a>
-        </div>
-      </nav>
+
+    <script>
+        // Replace this with your new portfolio URL
+        const newPortfolioUrl = "https://kenziegill.framer.website/";
+        
+        // Set the redirect URL
+        document.getElementById("redirect-link").href = newPortfolioUrl;
+        
+        // Create bubbles
+        function createBubbles() {
+            const numBubbles = 15;
+            for (let i = 0; i < numBubbles; i++) {
+                const bubble = document.createElement("div");
+                bubble.classList.add("bubble");
+                
+                // Random size between 20px and 100px
+                const size = Math.floor(Math.random() * 80) + 20;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Random position
+                bubble.style.top = `${Math.random() * 100}%`;
+                bubble.style.left = `${Math.random() * 100}%`;
+                
+                // Random animation delay
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                // Random opacity
+                bubble.style.opacity = Math.random() * 0.6 + 0.1;
+                
+                document.body.appendChild(bubble);
+            }
+        }
+        
+        // Countdown and redirect
+        let secondsLeft = 5;
+        const countdownElement = document.getElementById("countdown");
+        
+        function updateCountdown() {
+            countdownElement.textContent = secondsLeft;
+            
+            if (secondsLeft <= 0) {
+                window.location.href = newPortfolioUrl;
+            } else {
+                secondsLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener("DOMContentLoaded", () => {
+            createBubbles();
+            updateCountdown();
+            
+            // In case JavaScript is disabled or errors out, ensure the link works
+            document.getElementById("redirect-link").addEventListener("click", function(e) {
+                e.preventDefault();
+                window.location.href = newPortfolioUrl;
+            });
+        });
+    </script>
 </body>
 </html>
